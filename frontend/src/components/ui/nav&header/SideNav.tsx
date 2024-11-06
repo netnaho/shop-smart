@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Logo from "../../../assets/shopping-logo.jpg";
 import Random from "../../../assets/random.jpg";
 import { X, MoveRight } from "lucide-react";

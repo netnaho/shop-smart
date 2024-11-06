@@ -1,4 +1,3 @@
-import React from "react";
 import SideNav from "./ui/nav&header/SideNav";
 
 const MainPages = () => {
