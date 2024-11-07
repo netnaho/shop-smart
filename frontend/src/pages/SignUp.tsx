@@ -1,116 +1,146 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    fullname: "",
+    email: "",
+    phone: "",
+    location: "",
+    password: "",
+    age: "",
+  });
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
+  const handleSetUserData = (e: any) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
 
-    // Basic validation
-    if (!username && !email && !password) {
-      setError('All fields are required.');
-      return;
+  const handleSubmit = async () => {
+    if (
+      !userData.fullname ||
+      !userData.email ||
+      !userData.phone ||
+      !userData.location ||
+      !userData.password ||
+      !userData.password ||
+      !userData.age
+    ) {
+      alert("please fill the form properly");
+    } else {
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/user/register",
+          userData,
+          { withCredentials: true }
+        );
+        alert(response.data.message);
+        navigate("/login/");
+      } catch (error: any) {
+        alert(error.data?.response?.message);
+      }
     }
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
-
-    // Clear the error message if validation passes
-    setError('');
-
-    // Placeholder: here you can add code to send data to your server
-    console.log('Sign-up data:', { username, email, password });
-
-    // Reset form
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
   };
 
   return (
-    <div className="sign-up-form" style={styles.container}>
-      <h2>Sign Up</h2>
-      {error && <p style={styles.error}>{error}</p>}
-      <form onSubmit={handleSignUp}>
-        <div style={styles.inputContainer}>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            // style={styles.input}
-          />
-        </div>
-        <div style={styles.inputContainer}>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            // style={styles.input}
-          />
-        </div>
-        <div style={styles.inputContainer}>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            // style={styles.input}
-          />
-        </div>
-        <div style={styles.inputContainer}>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            // style={styles.input}
-          />
-        </div>
-        <button type="submit" style={styles.button}>Sign Up</button>
-      </form>
+    <div className="flex items-center justify-center h-fit bg-gray-100">
+           {" "}
+      <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+               {" "}
+        <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
+                       
+        <form>
+                   {" "}
+          <div className="mb-4">
+                        <label className="block mb-2">Full Name:</label>
+                       {" "}
+            <input
+              type="text"
+              value={userData.fullname}
+              name="name"
+              onChange={handleSetUserData}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+                     {" "}
+          </div>
+                   {" "}
+          <div className="mb-4">
+                        <label className="block mb-2">Age:</label>
+                       {" "}
+            <input
+              type="number"
+              value={userData.age}
+              name="age"
+              onChange={handleSetUserData}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+                     {" "}
+          </div>
+                   {" "}
+          <div className="mb-4">
+                        <label className="block mb-2">Location:</label>
+                       {" "}
+            <input
+              type="text"
+              name="location"
+              value={userData.location}
+              onChange={handleSetUserData}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+                     {" "}
+          </div>{" "}
+          <div className="mb-4">
+                        <label className="block mb-2">Phone Number:</label>
+                       {" "}
+            <input
+              type="number"
+              value={userData.phone}
+              name="phone"
+              onChange={handleSetUserData}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+                     {" "}
+          </div>{" "}
+          <div className="mb-4">
+                        <label className="block mb-2">Email:</label>
+                       {" "}
+            <input
+              type="email"
+              value={userData.email}
+              name="email"
+              onChange={handleSetUserData}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+                     {" "}
+          </div>
+                   {" "}
+          <div className="mb-4">
+                        <label className="block mb-2">Password:</label>
+                       {" "}
+            <input
+              type="password"
+              value={userData.password}
+              name="password"
+              onChange={handleSetUserData}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+                     {" "}
+          </div>
+                             {" "}
+          <button
+            className="w-full py-2 bg-blue-500 text-white rounded-md"
+            onClick={handleSubmit}
+          >
+            Sign Up
+          </button>
+                 {" "}
+        </form>
+             {" "}
+      </div>
+         {" "}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '0 auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    backgroundColor: '#f9f9f9',
-  },
-  inputContainer: {
-    marginBottom: '15px',
-  },
-  input: {
-    width: '100%',
-    padding: '8px',
-    marginTop: '5px',
-    boxSizing: 'border-box',
-  },
-  button: {
-    width: '100%',
-    padding: '10px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  error: {
-    color: 'red',
-    marginBottom: '10px',
-  },
-};
 
 export default SignUp;
