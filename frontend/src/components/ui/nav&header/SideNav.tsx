@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Logo from "../../../assets/shopping-logo.jpg";
 import Random from "../../../assets/random.jpg";
 import { X, MoveRight } from "lucide-react";
@@ -41,11 +41,11 @@ const SideNav = () => {
         </div>
 
         <div className="h-[80%] flex flex-col gap-5 py-1  overflow-hidden font-bold ">
-          <div className="border px-3 py-2">Find Items</div>
-          <div className="border px-3 py-2">Find Items</div>
+          <div className="border px-3 py-2">Find Products</div>
+          <div className="border px-3 py-2">Cart</div>
           <div className="border px-3 py-2">Wallet</div>
-          <div className="border px-3 py-2">Messaging</div>
-          <div className="border px-3 py-2">Find Items</div>
+          <div className="border px-3 py-2">Profile</div>
+          <div className="border px-3 py-2">Orders</div>
         </div>
 
         <div className="flex gap-2 border-t pt-2 border-gray-300">
