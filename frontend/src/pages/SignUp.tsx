@@ -35,8 +35,9 @@ function SignUp() {
           userData,
           { withCredentials: true }
         );
-        alert(response.data.message);
-        navigate("/login/");
+        alert("registered");
+        // alert(response.data.message);
+        navigate("/login");
       } catch (error: any) {
         alert(error.data?.response?.message);
       }
@@ -50,7 +51,7 @@ function SignUp() {
                {" "}
         <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
                        
-        <form>
+        <div>
                    {" "}
           <div className="mb-4">
                         <label className="block mb-2">Full Name:</label>
@@ -58,7 +59,7 @@ function SignUp() {
             <input
               type="text"
               value={userData.fullname}
-              name="name"
+              name="fullname"
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
             />
@@ -79,7 +80,8 @@ function SignUp() {
           </div>
                    {" "}
           <div className="mb-4">
-                        <label className="block mb-2">Location:</label>
+            // eslint-disable-next-line no-irregular-whitespace            {" "}
+            <label className="block mb-2">Location:</label>
                        {" "}
             <input
               type="text"
@@ -135,7 +137,7 @@ function SignUp() {
             Sign Up
           </button>
                  {" "}
-        </form>
+        </div>
              {" "}
       </div>
          {" "}

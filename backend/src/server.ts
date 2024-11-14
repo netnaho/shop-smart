@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import { connectDB } from "./config/db";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { userRouter } from "./routes/userRoute";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,5 +29,18 @@ connectDB();
 
 // cookie-parser
 app.use(cookieParser()); // used to set cookie in web browser
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+app.get("/test", (req, res) => {
+  //listOfDrivers(); // Assuming listOfDrivers is defined elsewhere
+  res.send("Test Success");
+});
+
+//routes
+app.use("/user", userRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

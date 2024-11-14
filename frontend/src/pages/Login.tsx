@@ -19,12 +19,12 @@ function Login() {
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:8000/user/register",
+          "http://localhost:8000/user/login",
           userData,
           { withCredentials: true }
         );
         alert(response.data.message);
-        navigate("/pages/");
+        navigate("/pages");
       } catch (error: any) {
         alert(error.data?.response?.message);
       }
@@ -35,7 +35,7 @@ function Login() {
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
-        <form>
+        <div>
           <div className="mb-4">
             <label className="block mb-2">Email:</label>
             <input
@@ -62,7 +62,7 @@ function Login() {
           >
             Login
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
