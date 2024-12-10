@@ -8,6 +8,7 @@ import { connectDB } from "./config/db";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { userRouter } from "./routes/userRoute";
+import { adminRoutes } from "./routes/adminRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,5 +43,6 @@ app.get("/test", (req, res) => {
 
 //routes
 app.use("/user", userRouter);
+app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
