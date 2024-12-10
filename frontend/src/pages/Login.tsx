@@ -23,6 +23,7 @@ function Login() {
           userData,
           { withCredentials: true }
         );
+        console.log(response);
         alert(response.data.message);
         navigate("/pages");
       } catch (error: any) {

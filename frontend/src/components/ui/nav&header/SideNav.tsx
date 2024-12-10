@@ -2,9 +2,10 @@ import { useState } from "react";
 import Logo from "../../../assets/shopping-logo.jpg";
 import Random from "../../../assets/random.jpg";
 import { X, MoveRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const SideNav = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuOpenClose = () => {
     setIsMenuOpen(isMenuOpen ? false : true);
@@ -41,11 +42,25 @@ const SideNav = () => {
         </div>
 
         <div className="h-[80%] flex flex-col gap-5 py-1  overflow-hidden font-bold ">
-          <div className="border px-3 py-2">Find Products</div>
-          <div className="border px-3 py-2">Cart</div>
-          <div className="border px-3 py-2">Wallet</div>
-          <div className="border px-3 py-2">Profile</div>
-          <div className="border px-3 py-2">Orders</div>
+          <Link to="/">
+            <div className="border px-3 py-2">Find Products</div>
+          </Link>
+
+          <Link to="/cart">
+            <div className="border px-3 py-2">Cart</div>
+          </Link>
+
+          <Link to="/wallet">
+            <div className="border px-3 py-2">Wallet</div>
+          </Link>
+
+          <Link to="profile">
+            <div className="border px-3 py-2">Profile</div>
+          </Link>
+
+          <Link to="orders">
+            <div className="border px-3 py-2">Orders</div>
+          </Link>
         </div>
 
         <div className="flex gap-2 border-t pt-2 border-gray-300">
