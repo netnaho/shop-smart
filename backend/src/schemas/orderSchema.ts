@@ -10,11 +10,12 @@ export interface IOrder extends Document {
   user: Types.ObjectId;
   cartItems: CartItem[];
   totalPrice: number;
+  status: string;
 }
 
 // Mongoose schema definition
 const orderSchema: Schema<IOrder> = new mongoose.Schema({
-  user: { types: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   cartItems: {
     type: [
       {
@@ -24,10 +25,8 @@ const orderSchema: Schema<IOrder> = new mongoose.Schema({
     ],
   },
   totalPrice: { type: Number },
+  status: { type: String, default: "pending" },
 });
 
-const OrderModel: Model<IOrder> = mongoose.model<IOrder>(
-  "Order",
-  orderSchema
-);
+const OrderModel: Model<IOrder> = mongoose.model<IOrder>("Order", orderSchema);
 export default OrderModel;

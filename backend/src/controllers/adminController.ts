@@ -19,7 +19,8 @@ export const createProduct = async (req: Request, res: Response) => {
       category,
       price,
     });
-    res.status(200).json(product);
+    const getUpdatedProducts = await ProductModel.find({ category: category });
+    res.status(200).json(getUpdatedProducts);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error });
@@ -39,9 +40,23 @@ export const createCategory = async (req: Request, res: Response) => {
       name,
       image,
     });
-    res.status(200).json(category);
+    const updatedCategories = await CategoryModel.find({});
+    res.status(200).json(updatedCategories);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error });
+  }
+};
+
+export const deleteCategory = async (req: Request, res: Response) => {
+  const category_id = req.params.id;
+  console.log(category_id, "id");
+  try {
+    await CategoryModel.findByIdAndDelete(category_id);
+    const updatedCategories = await CategoryModel.find({});
+    res.status(200).json(updatedCategories);
+  } catch (error) {
+    console.log(error);
+    res.status(200).json({ error: error });
   }
 };

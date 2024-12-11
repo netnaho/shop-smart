@@ -4,9 +4,9 @@ import SideNav from "./ui/nav&header/SideNav";
 const MainPages = () => {
   return (
     <div className="flex flex-col relative">
-      <div className="">
+      {/* <div className="">
         <SideNav />
-      </div>
+      </div> */}
       <Home />
     </div>
   );

@@ -7,6 +7,7 @@ import axios from "axios";
 //import { Button } from "@/components/ui/button";
 
 interface Category {
+  _id: string;
   name: string;
   image: string;
 }
@@ -75,7 +76,7 @@ const Home: React.FC = () => {
     <div>
       {/* hero section */}
       <div>
-        <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-green-100 md:shadow-xl">
+        <div className="relative flex h-[350px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-green-100 md:shadow-xl">
           <p className="z-10 whitespace-pre-wrap text-center text-7xl font-bold tracking-tighter text-slate-600">
             Shop Smart
           </p>
@@ -111,10 +112,10 @@ const Home: React.FC = () => {
                 </CardBody>
                 <CardFooter className="text-small justify-between">
                   <b>{item?.name}</b>
-                  <Link to="/category-products">
-                    <Button className="text-white font-medium bg-slate-400 px-4 py-2 rounded-full">
+                  <Link to={`/category-products?cat_id=${item._id}`}>
+                    <button className="text-white font-medium bg-slate-400 px-4 py-2 rounded-full">
                       Find More
-                    </Button>
+                    </button>
                   </Link>
                 </CardFooter>
               </Card>

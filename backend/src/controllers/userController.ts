@@ -5,9 +5,10 @@ import CategoryModel from "../schemas/categorySchema";
 import ProductModel from "../schemas/productSchema";
 import { getAccessToken } from "../utils/tokens";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import OrderModel from "../schemas/orderSchema";
 
 interface AuthenticatedRequest extends Request {
-  user?: Object | JwtPayload;
+  user?: JwtPayload;
 }
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -69,8 +70,11 @@ export const getCategories = async (req: Request, res: Response) => {
 };
 
 export const getProducts = async (req: Request, res: Response) => {
+  const { category_id } = req.query;
   try {
-    const products = await ProductModel.find({});
+    const products = await ProductModel.find({
+      category: category_id,
+    }).populate("category");
     res.status(200).json(products);
   } catch (error) {
     console.error(error);
@@ -94,5 +98,37 @@ export const getUserInfo = async (req: AuthenticatedRequest, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error });
+  }
+};
+
+export const createOrder = async (req: AuthenticatedRequest, res: Response) => {
+  const { cart_items, total_price } = req.body;
+  try {
+    const user_id = req.user?.user?._id;
+    const response = await OrderModel.create({
+      user: user_id,
+      cartItems: cart_items,
+      totalPrice: total_price,
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
+};
+
+export const getUserOrders = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const user_id = req.user?.user?._id;
+    const userOrders = await OrderModel.find({ user: user_id }).populate(
+      "cartItems.product"
+    );
+    res.status(200).json(userOrders);
+  } catch (error) {
+    console.log(error);
+    res.status(200).json({ error });
   }
 };

@@ -25,7 +25,7 @@ function Login() {
         );
         console.log(response);
         alert(response.data.message);
-        navigate("/pages");
+        navigate("/");
       } catch (error: any) {
         alert(error.data?.response?.message);
       }

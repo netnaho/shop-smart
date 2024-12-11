@@ -16,7 +16,7 @@ const SideNav = () => {
       className={`  ${
         isMenuOpen
           ? "w-[20%] h-screen border border-blue-200 bg-gray-50 flex flex-col drop-shadow-xl p-5"
-          : "w-[3%] h-fit pt-3 "
+          : "w-[3%] h-fit pt-1 "
       }`}
     >
       <div className="flex justify-end">
