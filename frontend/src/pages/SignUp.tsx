@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -46,101 +46,81 @@ function SignUp() {
 
   return (
     <div className="flex items-center justify-center h-fit bg-gray-100">
-           {" "}
+      {" "}
       <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
-               {" "}
+        {" "}
         <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
-                       
         <div>
-                   {" "}
+          {" "}
           <div className="mb-4">
-                        <label className="block mb-2">Full Name:</label>
-                       {" "}
+            <label className="block mb-2">Full Name:</label>{" "}
             <input
               type="text"
               value={userData.fullname}
               name="fullname"
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
-            />
-                     {" "}
-          </div>
-                   {" "}
+            />{" "}
+          </div>{" "}
           <div className="mb-4">
-                        <label className="block mb-2">Age:</label>
-                       {" "}
+            <label className="block mb-2">Age:</label>{" "}
             <input
               type="number"
               value={userData.age}
               name="age"
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
-            />
-                     {" "}
-          </div>
-                   {" "}
+            />{" "}
+          </div>{" "}
           <div className="mb-4">
-            // eslint-disable-next-line no-irregular-whitespace            {" "}
-            <label className="block mb-2">Location:</label>
-                       {" "}
+            {/* // eslint-disable-next-line no-irregular-whitespace{" "} */}
+            <label className="block mb-2">Location:</label>{" "}
             <input
               type="text"
               name="location"
               value={userData.location}
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
-            />
-                     {" "}
+            />{" "}
           </div>{" "}
           <div className="mb-4">
-                        <label className="block mb-2">Phone Number:</label>
-                       {" "}
+            <label className="block mb-2">Phone Number:</label>{" "}
             <input
               type="number"
               value={userData.phone}
               name="phone"
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
-            />
-                     {" "}
+            />{" "}
           </div>{" "}
           <div className="mb-4">
-                        <label className="block mb-2">Email:</label>
-                       {" "}
+            <label className="block mb-2">Email:</label>{" "}
             <input
               type="email"
               value={userData.email}
               name="email"
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
-            />
-                     {" "}
-          </div>
-                   {" "}
+            />{" "}
+          </div>{" "}
           <div className="mb-4">
-                        <label className="block mb-2">Password:</label>
-                       {" "}
+            <label className="block mb-2">Password:</label>{" "}
             <input
               type="password"
               value={userData.password}
               name="password"
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
-            />
-                     {" "}
-          </div>
-                             {" "}
+            />{" "}
+          </div>{" "}
           <button
             className="w-full py-2 bg-blue-500 text-white rounded-md"
             onClick={handleSubmit}
           >
             Sign Up
-          </button>
-                 {" "}
-        </div>
-             {" "}
-      </div>
-         {" "}
+          </button>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }

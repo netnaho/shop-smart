@@ -8,6 +8,7 @@ export interface Client extends Document {
   age: number;
   password: string;
   location: string;
+  wallet: number;
   profilePicture?: string; // Optional field for profile picture URL
   verificationId: string;
   isRegistered: boolean;
@@ -22,6 +23,7 @@ const userSchema: Schema<Client> = new mongoose.Schema({
   age: { type: Number },
   password: { type: String },
   location: { type: String },
+  wallet: { type: Number },
   profilePicture: { type: String }, // Field for profile picture URL
   verificationId: { type: String },
   isRegistered: { type: Boolean, default: false },
