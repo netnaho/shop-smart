@@ -14,19 +14,22 @@ export interface IOrder extends Document {
 }
 
 // Mongoose schema definition
-const orderSchema: Schema<IOrder> = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  cartItems: {
-    type: [
-      {
-        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-        quantity: { type: Number },
-      },
-    ],
+const orderSchema: Schema<IOrder> = new mongoose.Schema(
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    cartItems: {
+      type: [
+        {
+          product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+          quantity: { type: Number },
+        },
+      ],
+    },
+    totalPrice: { type: Number },
+    status: { type: String, default: "pending" },
   },
-  totalPrice: { type: Number },
-  status: { type: String, default: "pending" },
-});
+  { timestamps: true }
+);
 
 const OrderModel: Model<IOrder> = mongoose.model<IOrder>("Order", orderSchema);
 export default OrderModel;

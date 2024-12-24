@@ -23,7 +23,7 @@ const userSchema: Schema<Client> = new mongoose.Schema({
   age: { type: Number },
   password: { type: String },
   location: { type: String },
-  wallet: { type: Number },
+  wallet: { type: Number, default: 0 },
   profilePicture: { type: String }, // Field for profile picture URL
   verificationId: { type: String },
   isRegistered: { type: Boolean, default: false },
