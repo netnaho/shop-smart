@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -56,6 +57,11 @@ function Login() {
               onChange={handleSetUserData}
               className="w-full px-3 py-2 border rounded-md"
             />
+          </div>
+          <div className="flex justify-end mb-2">
+            <Link to="/otp-phone" state={userData.email}>
+              <span className="text-blue-800">forgot passowrd</span>
+            </Link>
           </div>
           <button
             onClick={handleSubmit}

@@ -9,6 +9,7 @@ interface Product {
   _id: string;
   name: string;
   image: string;
+  description: string;
   availableQuantity: number;
   category: {
     _id: string;
@@ -119,6 +120,7 @@ const CategoryProducts = () => {
                   </CardBody>
                   <CardFooter className="text-small justify-between">
                     <b>{item.name}</b>
+                    
                     <div className="flex justify-evenly items-center gap-x-3">
                       {/* <Button className="w-[10px] h-[30px] "></Button> */}
                       <span

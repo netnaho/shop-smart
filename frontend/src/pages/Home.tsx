@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Ripple from "@/components/ui/ripple";
-import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Input } from "@/components/ui/input";
+import { useCart } from "@/hooks/cartContext";
 // import SideNav from "@/components/ui/nav&header/SideNav";
 //import { Button } from "@/components/ui/button";
 
@@ -12,8 +15,27 @@ interface Category {
   image: string;
 }
 
+interface Product {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+  availableQuantity: number;
+  category: {
+    _id: string;
+    name: string;
+    image: string;
+  };
+  price: number;
+  value: number;
+}
+
 const Home: React.FC = () => {
   const [categories, setCategories] = useState<Category[] | []>([]);
+  const [products, setProducts] = useState<Product[] | []>([]);
+  const [search, setSearch] = useState<string>("");
+  const { cart, addToCart, removeFromCart, decreaseQuantity, clearCart } =
+    useCart();
   // const list = [
   //   {
   //     title: "Iphones",
@@ -57,6 +79,31 @@ const Home: React.FC = () => {
   //   },
   // ];
 
+  const handleIncrement = (id: string, prodItem: Product) => {
+    setProducts((prevItems) =>
+      prevItems.map((item) =>
+        item._id === id ? { ...item, value: item.value + 1 } : item
+      )
+    );
+    addToCart(prodItem);
+  };
+
+  // Decrement value for a specific item
+  const handleDecrement = (id: string, prodItem: Product) => {
+    setProducts((prevItems) =>
+      prevItems.map((item) =>
+        item._id === id ? { ...item, value: Math.max(item.value - 1, 0) } : item
+      )
+    );
+    decreaseQuantity(id);
+  };
+
+  const filteredData = search
+    ? products.filter((product) =>
+        product.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : products;
+
   useEffect(() => {
     try {
       async function fetchCategories() {
@@ -67,6 +114,15 @@ const Home: React.FC = () => {
         setCategories(response.data);
         console.log(response);
       }
+      async function fetchProducts() {
+        const response = await axios.get(
+          "http://localhost:8000/admin/all-products",
+          { withCredentials: true }
+        );
+        setProducts(response.data);
+        console.log(response.data);
+      }
+      fetchProducts();
       fetchCategories();
     } catch (error) {
       console.log(error);
@@ -120,6 +176,83 @@ const Home: React.FC = () => {
                 </CardFooter>
               </Card>
             ))}
+          </div>
+          <div className="flex flex-col gap-y-4 my-5">
+            <h1>All Products</h1>
+            <div>
+              <Input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearch(e.target.value);
+                }}
+                placeholder="Search"
+              />
+              {/* <Button></Button> */}
+            </div>
+            <div className="flex justify-end items-center mb-5"></div>
+            <Link to="/cart" state={products.filter((item) => item.value > 0)}>
+              <button className="bg-slate-500 p-3 rounded-xl relative">
+                <span className="absolute bg-blue-500 text-white p-1 w-[25px] h-[25px] rounded-full flex justify-center items-center -top-1 -right-1">
+                  {cart.reduce((acc, cur) => {
+                    return acc + cur.value;
+                  }, 0)}
+                </span>
+                <ShoppingCart
+                  strokeWidth={2.75}
+                  className="w-[28px] h-[28px] text-white"
+                />
+              </button>
+            </Link>
+            <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+              {filteredData.map((item, index) => (
+                <Card
+                  shadow="sm"
+                  key={index}
+                  isPressable
+                  onPress={() => console.log("item pressed")}
+                >
+                  <CardBody className="overflow-visible p-0">
+                    <Image
+                      shadow="sm"
+                      radius="lg"
+                      width="100%"
+                      alt={item.name}
+                      className="w-full object-cover h-[200px]"
+                      src={item.image}
+                    />
+                  </CardBody>
+                  <CardFooter className="text-small justify-between">
+                    <b>{item.name}</b>
+                    <b>{item.description}</b>
+                    <div className="flex justify-evenly items-center gap-x-3">
+                      {/* <Button className="w-[10px] h-[30px] "></Button> */}
+                      <span
+                        onClick={() => {
+                          handleIncrement(item._id, item);
+                        }}
+                        className="text-slate-800 text-lg font-medium bg-slate-100 px-[8px] rounded-xl border-[1px] border-slate-500"
+                      >
+                        +
+                      </span>
+                      <span>
+                        {cart.filter((item2) => item2._id === item._id)[0]
+                          ?.value
+                          ? cart.filter((item2) => item2._id === item._id)[0]
+                              ?.value
+                          : 0}
+                      </span>
+                      <span
+                        onClick={() => {
+                          handleDecrement(item._id, item);
+                        }}
+                        className="text-slate-800 text-lg font-medium bg-slate-100 px-[10px] rounded-xl border-[1px] border-slate-500"
+                      >
+                        -
+                      </span>
+                    </div>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </div>

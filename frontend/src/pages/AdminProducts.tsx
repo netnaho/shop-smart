@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { ChevronRight } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -100,7 +101,7 @@ const AdminProducts = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files && e.target.files[0] && e.target.files[0] !== null) {
       setNewProduct((prevState) => ({
         ...prevState,
         image: e.target.files[0],
@@ -120,7 +121,7 @@ const AdminProducts = () => {
   formData.append("availableQuantity", newProduct.availableQuantity);
   formData.append("category", newProduct.category);
   formData.append("price", newProduct.price);
-
+  
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
@@ -129,6 +130,22 @@ const AdminProducts = () => {
       );
       setProducts(response.data);
       console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleProductDelete = async (
+    category_id: string,
+    product_id: string
+  ) => {
+    console.log(category_id, product_id);
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/admin/delete-product/${product_id}/${category_id}`
+      );
+      setProducts(response.data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -258,7 +275,7 @@ const AdminProducts = () => {
               isPressable
               onPress={() => console.log("item pressed")}
             >
-              <CardBody className="overflow-visible p-0">
+              <CardBody className=" relative overflow-visible p-0">
                 <Image
                   shadow="sm"
                   radius="lg"
@@ -267,6 +284,14 @@ const AdminProducts = () => {
                   className="w-full object-cover h-[200px]"
                   src={item.image}
                 />
+                <div
+                  onClick={() => {
+                    handleProductDelete(item.category._id, item._id);
+                  }}
+                  className="absolute z-50 right-0 top-0 w-[45px] h-[45px] rounded-xl bg-red-500/80 flex justify-center items-center"
+                >
+                  <Trash2 className="text-white " />
+                </div>
               </CardBody>
               <CardFooter className="text-small flex items-center justify-between">
                 <b>{item.name}</b>

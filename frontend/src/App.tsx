@@ -16,6 +16,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminCategories from "./pages/AdminCategories";
 import AdminProducts from "./pages/AdminProducts";
 import SideNav from "./components/ui/nav&header/SideNav";
+import AdminOrders from "./pages/AdminOrders";
+import AdminUsers from "./pages/AdminUsers";
+import OtpLogin from "./pages/OtpLogin";
 
 const HomeLayout = () => {
   return (
@@ -69,6 +72,10 @@ function App() {
       element: <SignUp />,
     },
     {
+      path: "/otp-phone",
+      element: <OtpLogin />,
+    },
+    {
       path: "/admin",
       element: <Admin />,
       children: [
@@ -81,10 +88,14 @@ function App() {
           element: <AdminCategories />,
         },
         { path: "/admin/products", element: <AdminProducts /> },
-        // {
-        //   path: "/admin/products",
-        //   element: <div>Products</div>,
-        // },
+        {
+          path: "/admin/orders",
+          element: <AdminOrders />,
+        },
+        {
+          path: "/admin/users",
+          element: <AdminUsers />,
+        },
         {
           path: "/admin/report",
           element: <div>Report Summary</div>,

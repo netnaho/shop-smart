@@ -104,6 +104,15 @@ const Cart = () => {
                 <div>
                   <h2>{item.name}</h2>
                 </div>
+                <div>
+                  {item.availableQuantity > 0 ? (
+                    <div className="text-green-500">
+                      Available: {item.availableQuantity} items
+                    </div>
+                  ) : (
+                    <div className="text-red-500">Out of stock</div>
+                  )}
+                </div>
                 <div className="flex justify-evenly items-center gap-x-3">
                   {/* <Button className="w-[10px] h-[30px] "></Button> */}
                   <span

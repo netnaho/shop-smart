@@ -12,29 +12,29 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Calendar, Home, Inbox, Search, Settings, PackageSearch, Logs, Users } from "lucide-react";
 
 export function AppSidebar() {
   const items = [
     {
-      title: "Home",
-      url: "#",
+      title: "Dashboard",
+      url: "/admin",
       icon: Home,
     },
     {
       title: "Categories and Products",
       url: "/admin/categories",
-      icon: Inbox,
+      icon: PackageSearch,
     },
     {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
+      title: "Manage Orders",
+      url: "/admin/orders",
+      icon: Logs,
     },
     {
-      title: "Search",
-      url: "#",
-      icon: Search,
+      title: "Users",
+      url: "/admin/users",
+      icon: Users,
     },
     {
       title: "Settings",
